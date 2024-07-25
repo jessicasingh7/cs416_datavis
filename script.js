@@ -52,7 +52,7 @@ function createScene1(data) {
         .attr("cx", d => x(d.EngineCylinders))
         .attr("cy", d => y(d.AverageHighwayMPG))
         .attr("r", 5)
-        .attr("fill", "blue")
+        .attr("fill", "green")
         .on("mouseover", function(event, d) {
             d3.select(this)
                 .attr("r", 10)
@@ -87,7 +87,6 @@ function createScene1(data) {
         .attr("y", 30)
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
-        .style("text-decoration", "underline")
         .text("Average Highway MPG vs Engine Cylinders");
 }
 
@@ -146,7 +145,6 @@ function createScene2(data) {
         .attr("y", 30)
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
-        .style("text-decoration", "underline")
         .text("Average City MPG by Fuel Type");
 }
 
@@ -205,6 +203,5 @@ function createScene3(data) {
         .attr("y", 30)
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
-        .style("text-decoration", "underline")
         .text("Average Highway MPG vs Average City MPG");
 }

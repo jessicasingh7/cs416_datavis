@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Narrative Visualization</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .scene { display: none; }
+        .visible { display: block; }
+        .annotation { fill: red; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div id="scene1" class="scene visible"></div>
+    <div id="scene2" class="scene"></div>
+    <div id="scene3" class="scene"></div>
+    <div id="exploration" class="scene"></div>
+    <button id="next">Next</button>
+    <script src="script.js"></script>
+</body>
+</html>

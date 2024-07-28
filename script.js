@@ -93,7 +93,7 @@ function enginevsmpg(data) {
         .on("mouseout", function(d) {
             d3.select(this)
                 .attr("r", 5)
-                .attr("fill", "blue");
+                .attr("fill", "red");
 
             svg.select("#tooltip").remove();
         });
@@ -192,7 +192,7 @@ function cityvshighway(data) {
         .attr("cx", d => x(d.AverageCityMPG))
         .attr("cy", d => y(d.AverageHighwayMPG))
         .attr("r", 5)
-        .attr("fill", "blue")
+        .attr("fill", "red")
         .on("mouseover", function(event, d) {
             d3.select(this)
                 .attr("r", 10)
@@ -209,7 +209,7 @@ function cityvshighway(data) {
         .on("mouseout", function(d) {
             d3.select(this)
                 .attr("r", 5)
-                .attr("fill", "blue");
+                .attr("fill", "red");
 
             svg.select("#tooltip").remove();
         });

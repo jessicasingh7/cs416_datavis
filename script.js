@@ -204,7 +204,7 @@ function cityvshighway(data) {
                 .attr("y", y(d.AverageHighwayMPG) - 10)
                 .attr("text-anchor", "middle")
                 .attr("fill", "black")
-                .text(`${d.Make} - ${d.Fuel}`);
+                .text(`${d.Make},  ${d.Fuel}`);
         })
         .on("mouseout", function(d) {
             d3.select(this)
@@ -228,4 +228,19 @@ function cityvshighway(data) {
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
         .text("Average Highway MPG vs Average City MPG");
+
+    svg.append("text")
+        .attr("x", 400)
+        .attr("y", 380)
+        .attr("text-anchor", "middle")
+        .style("font-size", "12px")
+        .text("Average City MPG");
+
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("x", -200)
+        .attr("y", 20)
+        .attr("text-anchor", "middle")
+        .style("font-size", "12px")
+        .text("Average Highway MPG");
 }

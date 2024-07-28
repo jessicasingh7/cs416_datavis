@@ -34,41 +34,6 @@ function enginevsmpg(data) {
         .domain(d3.extent(data, d => +d.AverageHighwayMPG))
         .range([350, 50]);
 
-    const line = d3.line()
-        .x(d => x(d.EngineCylinders))
-        .y(d => y(d.AverageHighwayMPG));
-    
-    const color = d3.scaleOrdinal(d3.schemeCategory10);
-    const makes = Array.from(new Set(data.map(d => d.Make)));
-    const allMakes = d3.group(data, d => d.Make);
-
-    allMakes.forEach((values, key) => {
-        svg.append("path")
-            .datum(values)
-            .attr("fill", "none")
-            .attr("stroke", color(key))
-            .attr("stroke-width", 1.5)
-            .attr("d", line)
-            .on("mouseover", function(event, d) {
-                d3.select(this)
-                    .attr("stroke-width", 3);
-
-                svg.append("text")
-                    .attr("id", "tooltip")
-                    .attr("x", x(d3.mean(d, d => d.EngineCylinders)))
-                    .attr("y", y(d3.mean(d, d => d.AverageHighwayMPG)) - 10)
-                    .attr("text-anchor", "middle")
-                    .attr("fill", "black")
-                    .text(`Make: ${key}`);
-            })
-            .on("mouseout", function(d) {
-                d3.select(this)
-                    .attr("stroke-width", 1.5);
-
-                svg.select("#tooltip").remove();
-            });
-    });
-
     svg.selectAll(".dot")
         .data(data)
         .enter().append("circle")
@@ -80,7 +45,7 @@ function enginevsmpg(data) {
         .on("mouseover", function(event, d) {
             d3.select(this)
                 .attr("r", 10)
-                .attr("fill", "orange");
+                .attr("fill", "red");
 
             svg.append("text")
                 .attr("id", "tooltip")
@@ -93,7 +58,7 @@ function enginevsmpg(data) {
         .on("mouseout", function(d) {
             d3.select(this)
                 .attr("r", 5)
-                .attr("fill", "blue");
+                .attr("fill", "green");
 
             svg.select("#tooltip").remove();
         });
@@ -107,10 +72,23 @@ function enginevsmpg(data) {
         .call(d3.axisLeft(y));
 
     svg.append("text")
+        .attr("transform", "translate(400, 390)")
+        .style("text-anchor", "middle")
+        .text("Engine Cylinders");
+
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 15)
+        .attr("x", -200)
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Average Highway MPG");
+
+    svg.append("text")
         .attr("x", 400)
         .attr("y", 30)
         .attr("text-anchor", "middle")
-        .style("font-size", "16px")
+        .style("font-size", "17px")
         .text("Average Highway MPG vs Engine Cylinders");
 }
 
@@ -139,7 +117,7 @@ function fuelvsmpg(data) {
         .attr("fill", "green")
         .on("mouseover", function(event, d) {
             d3.select(this)
-                .attr("fill", "orange");
+                .attr("fill", "red");
 
             svg.append("text")
                 .attr("id", "tooltip")
@@ -165,11 +143,24 @@ function fuelvsmpg(data) {
         .call(d3.axisLeft(y));
 
     svg.append("text")
+        .attr("transform", "translate(400, 390)")
+        .style("text-anchor", "middle")
+        .text("Fuel Type");
+
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 15)
+        .attr("x", -200)
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Average City MPG");
+
+    svg.append("text")
         .attr("x", 400)
         .attr("y", 30)
         .attr("text-anchor", "middle")
-        .style("font-size", "16px")
-        .text("Average City MPG by Fuel Type");
+        .style("font-size", "17px")
+        .text("Average City MPG by Type of Fuel");
 }
 
 function cityvshighway(data) {
@@ -192,11 +183,11 @@ function cityvshighway(data) {
         .attr("cx", d => x(d.AverageCityMPG))
         .attr("cy", d => y(d.AverageHighwayMPG))
         .attr("r", 5)
-        .attr("fill", "blue")
+        .attr("fill", "pink")
         .on("mouseover", function(event, d) {
             d3.select(this)
                 .attr("r", 10)
-                .attr("fill", "orange");
+                .attr("fill", "red");
 
             svg.append("text")
                 .attr("id", "tooltip")
@@ -209,7 +200,7 @@ function cityvshighway(data) {
         .on("mouseout", function(d) {
             d3.select(this)
                 .attr("r", 5)
-                .attr("fill", "blue");
+                .attr("fill", "pink");
 
             svg.select("#tooltip").remove();
         });
@@ -223,9 +214,22 @@ function cityvshighway(data) {
         .call(d3.axisLeft(y));
 
     svg.append("text")
+        .attr("transform", "translate(400, 390)")
+        .style("text-anchor", "middle")
+        .text("Average City MPG");
+
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 15)
+        .attr("x", -200)
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Average Highway MPG");
+
+    svg.append("text")
         .attr("x", 400)
         .attr("y", 30)
         .attr("text-anchor", "middle")
-        .style("font-size", "16px")
-        .text("Average Highway MPG vs Average City MPG");
+        .style("font-size", "17px")
+        .text("Average Highway vs Average City MPG");
 }

@@ -3,9 +3,9 @@ let currentScene = 0;
 
 async function loadData() {
     const data = await d3.csv("cars2017.csv");
-    createScene1(data);
-    createScene2(data);
-    createScene3(data);
+    enginevsmpg(data);
+    fuelvsmpg(data);
+    cityvshighway(data);
 }
 
 loadData();
@@ -21,7 +21,7 @@ document.getElementById("next").addEventListener("click", () => {
     showScene(currentScene);
 });
 
-function createScene1(data) {
+function enginevsmpg(data) {
     const svg = d3.select("#scene1").append("svg")
         .attr("width", 800)
         .attr("height", 400);
@@ -37,13 +37,37 @@ function createScene1(data) {
     const line = d3.line()
         .x(d => x(d.EngineCylinders))
         .y(d => y(d.AverageHighwayMPG));
+    
+    const color = d3.scaleOrdinal(d3.schemeCategory10);
+    const makes = Array.from(new Set(data.map(d => d.Make)));
+    const allMakes = d3.group(data, d => d.Make);
 
-    svg.append("path")
-        .datum(data)
-        .attr("fill", "none")
-        .attr("stroke", "blue")
-        .attr("stroke-width", 1.5)
-        .attr("d", line);
+    allMakes.forEach((values, key) => {
+        svg.append("path")
+            .datum(values)
+            .attr("fill", "none")
+            .attr("stroke", color(key))
+            .attr("stroke-width", 1.5)
+            .attr("d", line)
+            .on("mouseover", function(event, d) {
+                d3.select(this)
+                    .attr("stroke-width", 3);
+
+                svg.append("text")
+                    .attr("id", "tooltip")
+                    .attr("x", x(d3.mean(d, d => d.EngineCylinders)))
+                    .attr("y", y(d3.mean(d, d => d.AverageHighwayMPG)) - 10)
+                    .attr("text-anchor", "middle")
+                    .attr("fill", "black")
+                    .text(`Make: ${key}`);
+            })
+            .on("mouseout", function(d) {
+                d3.select(this)
+                    .attr("stroke-width", 1.5);
+
+                svg.select("#tooltip").remove();
+            });
+    });
 
     svg.selectAll(".dot")
         .data(data)
@@ -90,7 +114,7 @@ function createScene1(data) {
         .text("Average Highway MPG vs Engine Cylinders");
 }
 
-function createScene2(data) {
+function fuelvsmpg(data) {
     const svg = d3.select("#scene2").append("svg")
         .attr("width", 800)
         .attr("height", 400);
@@ -148,7 +172,7 @@ function createScene2(data) {
         .text("Average City MPG by Fuel Type");
 }
 
-function createScene3(data) {
+function cityvshighway(data) {
     const svg = d3.select("#scene3").append("svg")
         .attr("width", 800)
         .attr("height", 400);
